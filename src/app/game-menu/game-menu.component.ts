@@ -12,4 +12,9 @@ export class GameMenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  onGameControl(arg) {
+    console.log('arg', arg);
+    
+  }
+
 }

@@ -1,3 +1,14 @@
-<p>
-  game-menu works!
-</p>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Game of Life</a>
+    </div>
+  </div>
+
+  <ul class="nav navbar-nav navbar-right">
+    <li><button class="btn btn-success" (click)="onGameControl('start')">Start</button></li>
+    <li><button class="btn btn-warning" (click)="onGameControl('pause')">Pause</button></li>
+    <li><button class="btn btn-danger" (click)="onGameControl('clear')">Clear</button></li>
+    <li><button class="btn btn-info" (click)="onGameControl('random')">Random</button></li>
+  </ul>
+</nav>

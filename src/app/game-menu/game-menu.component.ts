@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-game-menu',
@@ -7,15 +6,15 @@ import { EventEmitter } from 'events';
   styleUrls: ['./game-menu.component.css']
 })
 export class GameMenuComponent implements OnInit {
-  // https://medium.com/dailyjs/3-ways-to-communicate-between-angular-components-a1e3f3304ecb
-  @Output() gameState: EventEmitter<null> = new EventEmitter();
+  @Output() gameState: EventEmitter<string> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  onGameControl(gameState: string) {
-    console.log('Game Menu: onGameControl gameState', gameState);
+  changeGameState(_gameState: string) {
+    this.gameState.emit(_gameState);
   }
 
 }

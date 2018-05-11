@@ -6,9 +6,9 @@
   </div>
 
   <ul class="nav navbar-nav navbar-right">
-    <li><button class="btn btn-success" (click)="onGameControl('start')">Start</button></li>
-    <li><button class="btn btn-warning" (click)="onGameControl('pause')">Pause</button></li>
-    <li><button class="btn btn-danger" (click)="onGameControl('clear')">Clear</button></li>
-    <li><button class="btn btn-info" (click)="onGameControl('random')">Random</button></li>
+    <li><button class="btn btn-success" (click)="changeGameState('start')">Start</button></li>
+    <li><button class="btn btn-warning" (click)="changeGameState('pause')">Pause</button></li>
+    <li><button class="btn btn-danger" (click)="changeGameState('clear')">Clear</button></li>
+    <li><button class="btn btn-info" (click)="changeGameState('random')">Random</button></li>
   </ul>
 </nav>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+const boardBounds = { height: 20, width: 20 };
+
 @Component({
   selector: 'app-game-controller',
   templateUrl: './game-controller.component.html',
@@ -7,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameControllerComponent implements OnInit {
 
-  // @Input() gameState
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
+
   }
 
 }

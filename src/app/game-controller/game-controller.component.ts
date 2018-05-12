@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, onChange, Input, Output } from '@angular/core';
 
 const BOUNDS = { height: 20, width: 20 };
 
@@ -7,14 +7,22 @@ const BOUNDS = { height: 20, width: 20 };
   templateUrl: './game-controller.component.html',
   styleUrls: ['./game-controller.component.css']
 })
-export class GameControllerComponent implements OnInit {
-  @Output() boardBounds = BOUNDS;
+export class GameControllerComponent implements OnInit, onChange {
+
+  @Input() updateBoardBounds;
+
+  @Output() boardBounds = this.updateBoardBounds || BOUNDS;
+
   constructor() {
 
   }
 
   ngOnInit() {
 
+  }
+
+  ngOnChange() {
+    console.log('[GameController] this.boardBounds', this.boardBounds);
   }
 
 }

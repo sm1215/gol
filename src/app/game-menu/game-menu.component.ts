@@ -17,4 +17,8 @@ export class GameMenuComponent implements OnInit {
     this.gameState.emit(_gameState);
   }
 
+  changeGameboard() {
+
+  }
+
 }

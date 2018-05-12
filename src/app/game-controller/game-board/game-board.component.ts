@@ -21,7 +21,10 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('bounds', this.boardBounds);
+    this.setupGameboard();
+  }
+
+  setupGameboard() {
     const gameboard = [];
     for (let y = 0; y < this.boardBounds.height; y++) {
       const row = [];
@@ -31,6 +34,5 @@ export class GameBoardComponent implements OnInit, OnChanges {
       gameboard.push(row);
     }
     this.gameboard = gameboard;
-    console.log('gameboard', this.gameboard);
   }
 }

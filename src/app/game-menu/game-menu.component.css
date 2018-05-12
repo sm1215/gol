@@ -1,0 +1,117 @@
+header{
+    max-width:800px;
+    margin:40px auto 10px auto;
+    padding:20px 30px 20px 30px;
+    border-bottom:1px solid #cecece;
+    background-color:#e7e7e7;
+    box-sizing:border-box;
+}
+
+.brand, button, label, input{
+    font-family:Arial, Helvetica, sans-serif;
+    color:#1e1e1e;
+}
+
+ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.brand{
+    float:left;
+    font-size:18px;
+    line-height:20px;
+    font-weight:600;
+    color:#1d5a8d;
+}
+
+nav{
+    float:right;
+}
+
+.menu-item{
+    float:left;
+    margin-right:10px;
+}
+
+.menu-item.r{
+    margin-right:0;
+}
+
+button{
+    display:block;
+    color:#fff;
+    background-color:#cecece;
+    border:none;
+    padding:5px 7px;
+    opacity:1;
+    transition:opacity 0.2s, border-color 0.1s, border-width 0.3s;
+    cursor:pointer;
+    padding:0px;
+    box-sizing:border-box;
+    font-size:12px;
+    line-height:20px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    border-left-width:1px;
+    border-right-width:1px;
+    border-left-style:solid;
+    border-right-style:solid;
+    border-color:transparent;
+    width:80px;
+}
+
+button:hover{
+    opacity:0.8;
+    border-left-width:15px;
+    border-right-width:15px;
+}
+
+.start{
+    background-color:#0f8051;
+}
+
+.start:hover{
+    border-color:#15b673;
+}
+
+.pause{
+    background-color:#bba631;
+}
+
+.pause:hover{
+    border-color:#e0c83d;
+}
+
+.clear{
+    background-color:#7a1f1f;
+}
+
+.clear:hover{
+    border-color:#a02929;
+}
+
+.apply{
+    background-color:#1d5a8d;
+}
+
+.apply:hover{
+    border-color:#2d8cda;
+}
+
+label{
+    font-size: 8px;
+    line-height:10px;
+}
+
+input[type="number"]{
+    font-size:10px;
+    line-height: 12px;
+    padding:2px 0px;
+}
+
+.float-clear{
+    float:none;
+    clear:both;
+}

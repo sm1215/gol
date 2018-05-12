@@ -1,3 +1,5 @@
-<p>
-  game-board works!
-</p>
+<div class="row" *ngFor="let height of gameboard; index as y;">
+  <div class="col" *ngFor="let width of gameboard[y]; index as x;">
+    <app-cell></app-cell>
+  </div>
+</div>

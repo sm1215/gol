@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
-const boardBounds = { height: 20, width: 20 };
+const BOUNDS = { height: 20, width: 20 };
 
 @Component({
   selector: 'app-game-controller',
@@ -8,7 +8,7 @@ const boardBounds = { height: 20, width: 20 };
   styleUrls: ['./game-controller.component.css']
 })
 export class GameControllerComponent implements OnInit {
-
+  @Output() boardBounds = BOUNDS;
   constructor() {
 
   }

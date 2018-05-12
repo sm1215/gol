@@ -7,10 +7,12 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 })
 export class GameBoardComponent implements OnInit, OnChanges {
   @Input()
-  bounds = {
+  boardBounds: {
     height: 0,
     width: 0
   };
+
+  gameboard = [];
 
   constructor() {
   }
@@ -19,7 +21,16 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('bounds', this.bounds);
+    console.log('bounds', this.boardBounds);
+    const gameboard = [];
+    for (let y = 0; y < this.boardBounds.height; y++) {
+      const row = [];
+      for (let x = 0; x < this.boardBounds.width; x++) {
+        row.push(x);
+      }
+      gameboard.push(row);
+    }
+    this.gameboard = gameboard;
+    console.log('gameboard', this.gameboard);
   }
-
 }

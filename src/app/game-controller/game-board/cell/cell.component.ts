@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cell.component.css']
 })
 export class CellComponent implements OnInit {
-
+  x: number;
+  y: number;
   constructor() { }
 
   ngOnInit() {

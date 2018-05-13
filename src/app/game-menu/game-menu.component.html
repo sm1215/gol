@@ -14,11 +14,11 @@
       </li>
       <li class="menu-item">
         <label for="height">Board Height</label>
-        <input id="height" name="height" type="number" min="2" max="30" (value)="boardBounds.height">
+        <input #heightControl id="height" name="height" type="number" min="2" max="30" [value]="boardBounds.height" (click)="changeGameboard('height', heightControl.value)">
       </li>
       <li class="menu-item">
         <label for="width">Board Width</label>
-        <input id="width" name="width" type="number" min="2" max="30" (value)="boardBounds.width">
+        <input #widthControl id="width" name="width" type="number" min="2" max="30" [value]="boardBounds.width" (click)="changeGameboard('width', widthControl.value)">
       </li>
       <li class="menu-item r">
         <button class="game-control apply" (click)="changeGameboard()">Apply</button>

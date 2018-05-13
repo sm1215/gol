@@ -25,9 +25,12 @@ export class GameMenuComponent implements OnInit {
     this.gameState.emit(_gameState);
   }
 
-  changeGameboard() {
-    console.log('[GameMenu] this.boardBoards', this.boardBounds);
+  changeGameboard(key?: string, value?: number) {
+    if (key && value) {
+      this.boardBounds[key] = value;
+    }
     this.updateBoardBounds.emit(this.boardBounds);
+    console.log('[GameMenu] this.boardBoards', this.boardBounds);
   }
 
   // The boardBounds inputs still need some work

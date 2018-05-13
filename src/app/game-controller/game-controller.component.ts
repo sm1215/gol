@@ -23,6 +23,7 @@ export class GameControllerComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log('[GameController] this.boardBounds', this.boardBounds);
+    console.log('[GameController] this.updateBoardBounds', this.updateBoardBounds);
   }
 
 }

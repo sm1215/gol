@@ -13,4 +13,8 @@ export class AppComponent {
     this.gameState = gameState;
     console.log('updatedGameState ', gameState);
   }
+
+  onGameboard(arg: any) {
+    console.log('onGameboard', arg);
+  }
 }

@@ -11,10 +11,14 @@ export class AppComponent {
 
   onGameState(gameState: string) {
     this.gameState = gameState;
-    console.log('updatedGameState ', gameState);
+    console.log('[App] updatedGameState ', gameState);
   }
 
   onGameboard(arg: any) {
-    console.log('onGameboard', arg);
+    console.log('[App] onGameboard', arg);
+  }
+
+  updateBoardBounds($event: string) {
+    console.log('[App] boardBounds', $event);
   }
 }

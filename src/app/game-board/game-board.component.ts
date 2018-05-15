@@ -1,16 +1,17 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, DoCheck, Input, KeyValueDiffer, KeyValueDiffers } from '@angular/core';
 
 @Component({
   selector: 'app-game-board',
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.css']
 })
-export class GameBoardComponent implements OnInit, OnChanges {
+export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
   _gameState: string;
   _boardBounds: any = {
     height: 0,
     width: 0
   };
+  private _differ: KeyValueDiffer<string, number>;
 
   @Input()
   set gameState(value: string) {
@@ -19,15 +20,19 @@ export class GameBoardComponent implements OnInit, OnChanges {
   }
 
   @Input()
-  set boardBounds(value: any) {
+  set boardBounds(value: {[key: string]: number}) {
     this._boardBounds = value;
     console.log('[GameBoard set boardBounds]', this._boardBounds);
+
+    if (!this._differ && value) {
+      this._differ = this._differs.find(value).create();
+      console.log('creating differ', this._differ);
+    }
   }
 
   gameboard = [];
 
-  constructor() {
-  }
+  constructor(private _differs: KeyValueDiffers) {}
 
   ngOnInit() {
   }
@@ -35,6 +40,16 @@ export class GameBoardComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.setupGameboard();
     console.log('[GameBoard OnChanges] setting up gameboard');
+  }
+
+  ngDoCheck() {
+    console.log('ngDoCheck');
+    if (this._differ) {
+      const changes = this._differ.diff(this._boardBounds);
+      if (changes) {
+        this.setupGameboard();
+      }
+    }
   }
 
   setupGameboard() {

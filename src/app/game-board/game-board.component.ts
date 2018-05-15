@@ -84,6 +84,11 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
     window.clearInterval(this._tickTimer);
   }
 
+  clearGame() {
+    this._tick = 0;
+    this.pauseGame();
+  }
+
   advanceTick() {
     this._tick++;
 

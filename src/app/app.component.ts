@@ -18,7 +18,7 @@ export class AppComponent {
     console.log('[App] onGameboard', arg);
   }
 
-  updateBoardBounds($event: string) {
+  onBoardBounds($event: string) {
     console.log('[App] boardBounds', $event);
   }
 }

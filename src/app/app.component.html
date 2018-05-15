@@ -1,11 +1,10 @@
 <div class="row">
   <div class="col">
-    <app-game-menu (gameState)="onGameState($event)"></app-game-menu>
+    <app-game-menu (gameState)="onGameState($event)" (updateBoardBounds)="onBoardBounds($event)"></app-game-menu>
   </div>
 </div>
 <div class="row">
   <div class="col">
-    <!-- <app-game-controller (boardBounds)="onGameboard($event)"></app-game-controller> -->
-    <app-game-controller (updateBoardBounds)="updateBoardBounds($event)"></app-game-controller>
+    <app-game-controller></app-game-controller>
   </div>
 </div>

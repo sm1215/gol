@@ -11,7 +11,7 @@ export class GameMenuComponent implements OnInit {
     width: 20
   };
 
-  @Output() updateBoardBounds: EventEmitter<any> = new EventEmitter();
+  @Output() updateBoardBounds = new EventEmitter();
   @Output() gameState: EventEmitter<string> = new EventEmitter();
 
   constructor() {

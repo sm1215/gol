@@ -6,12 +6,13 @@ import { Component, OnInit, OnChanges, DoCheck, Input, KeyValueDiffer, KeyValueD
   styleUrls: ['./game-board.component.css']
 })
 export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
-  _gameState: string;
-  _boardBounds: any = {
+  private _gameState: string;
+  private _boardBounds: any = {
     height: 0,
     width: 0
   };
   private _differ: KeyValueDiffer<string, number>;
+  private _gameboard = [];
 
   @Input()
   set gameState(value: string) {
@@ -26,16 +27,11 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
 
     if (!this._differ && value) {
       this._differ = this._differs.find(value).create();
-      console.log('creating differ', this._differ);
     }
   }
 
-  gameboard = [];
-
   constructor(private _differs: KeyValueDiffers) {}
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     this.setupGameboard();
@@ -43,7 +39,7 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngDoCheck() {
-    console.log('ngDoCheck');
+    console.log('[GameBoard ngDoCheck] checking boardBounds differ');
     if (this._differ) {
       const changes = this._differ.diff(this._boardBounds);
       if (changes) {
@@ -61,6 +57,6 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
       }
       gameboard.push(row);
     }
-    this.gameboard = gameboard;
+    this._gameboard = gameboard;
   }
 }

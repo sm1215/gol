@@ -26,9 +26,10 @@ export class GameMenuComponent implements OnInit {
   }
 
   changeGameboard(key?: string, value?: string) {
-    if (key && value) {
+    if (key && this.boardBounds[key] && value) {
       this.boardBounds[key] = parseInt(value, 10);
     }
+    //Keep this outside so the Apply button click will still trigger an event emission
     this.updateBoardBounds.emit(this.boardBounds);
     console.log('[GameMenu] this.boardBoards', this.boardBounds);
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +8,15 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'app';
   gameState: string;
+  @Input() boardBounds: any;
 
   onGameState(gameState: string) {
     this.gameState = gameState;
     console.log('[App] updatedGameState ', gameState);
   }
 
-  onGameboard(arg: any) {
-    console.log('[App] onGameboard', arg);
-  }
-
-  onBoardBounds($event: string) {
-    console.log('[App] boardBounds', $event);
+  onBoardBounds(boardBounds: string) {
+    this.boardBounds = boardBounds;
+    console.log('[App] boardBounds', boardBounds);
   }
 }

@@ -13,6 +13,9 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
   };
   private _differ: KeyValueDiffer<string, number>;
   private _gameboard = [];
+  private _tick = 0;
+  private _tickInterval = 3000;
+  private _tickTimer = null;
 
   @Input()
   set gameState(value: string) {
@@ -34,8 +37,17 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
   ngOnInit() {}
 
   ngOnChanges() {
-    this.setupGameboard();
-    console.log('[GameBoard OnChanges] setting up gameboard');
+    switch (this._gameState) {
+      case 'start':
+        this.startGame();
+      break;
+      case 'pause':
+        this.pauseGame();
+      break;
+      case 'clear':
+      break;
+    }
+    console.log('[GameBoard OnChanges]');
   }
 
   ngDoCheck() {
@@ -58,5 +70,24 @@ export class GameBoardComponent implements OnInit, OnChanges, DoCheck {
       gameboard.push(row);
     }
     this._gameboard = gameboard;
+  }
+
+  startGame() {
+    console.log('[GameBoard] starting game...');
+    this._tickTimer = setInterval(() => {
+      this.advanceTick();
+    }, this._tickInterval);
+  }
+
+  pauseGame() {
+    console.log('[GameBoard] pausing game...');
+    window.clearInterval(this._tickTimer);
+  }
+
+  advanceTick() {
+    this._tick++;
+
+
+    console.log('tick', this._tick);
   }
 }

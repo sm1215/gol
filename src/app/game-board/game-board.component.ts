@@ -166,6 +166,10 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
 
     neighbors = this._cellsArray.filter((cell) => {
       let coordMatch;
+
+      // instead of forEach, should use array.every?
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+      // https://stackoverflow.com/a/44998197/4430625
       neighborCoords.forEach((coord) => {
         const matches = cell.x === coord.x && cell.y === coord.y;
         if (matches) {

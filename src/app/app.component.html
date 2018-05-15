@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col">
     <app-game-menu 
-      (gameState)="onGameState($event)" 
+      (updateGameState)="onGameState($event)"
       (updateBoardBounds)="onBoardBounds($event)"
     >
     </app-game-menu>
@@ -9,6 +9,10 @@
 </div>
 <div class="row">
   <div class="col">
-    <app-game-controller></app-game-controller>
+    <app-game-controller
+      [gameState]="gameState"
+      [boardBounds]="boardBounds"
+    >
+    </app-game-controller>
   </div>
 </div>

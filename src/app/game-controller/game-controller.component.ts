@@ -9,21 +9,16 @@ const BOUNDS = { height: 20, width: 20 };
 })
 export class GameControllerComponent implements OnInit, OnChanges {
 
-  @Input() updateBoardBounds;
+  @Input() gameState: string;
+  @Input() boardBounds: any;
 
-  @Output() boardBounds = this.updateBoardBounds || BOUNDS;
+  constructor() {}
 
-  constructor() {
-
-  }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
-    console.log('[GameController] this.boardBounds', this.boardBounds);
-    console.log('[GameController] this.updateBoardBounds', this.updateBoardBounds);
+    console.log('[GameController OnChanges] this.gameState', this.gameState);
+    console.log('[GameController OnChanges] this.boardBounds', this.boardBounds);
   }
 
 }

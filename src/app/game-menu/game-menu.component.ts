@@ -6,20 +6,23 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./game-menu.component.css']
 })
 export class GameMenuComponent implements OnInit {
-  @Input() boardBounds = {
+  boardBounds = {
     height: 20,
     width: 20
   };
 
-  @Output() updateBoardBounds = new EventEmitter();
-  @Output() gameState: EventEmitter<string> = new EventEmitter();
+  @Output() updateBoardBounds: EventEmitter<any> = new EventEmitter();
+  @Output() updateGameState: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.updateGameState.emit('pause');
+    this.updateBoardBounds.emit(this.boardBounds);
+  }
 
-  changeGameState(_gameState: string) {
-    this.gameState.emit(_gameState);
+  changeGameState(gameState: string) {
+    this.updateGameState.emit(gameState);
   }
 
   changeGameboard(key?: string, value?: string) {

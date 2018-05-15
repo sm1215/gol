@@ -14,12 +14,9 @@ export class GameMenuComponent implements OnInit {
   @Output() updateBoardBounds = new EventEmitter();
   @Output() gameState: EventEmitter<string> = new EventEmitter();
 
-  constructor() {
-    console.log('[GameMenu] this.boardBounds', this.boardBounds);
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   changeGameState(_gameState: string) {
     this.gameState.emit(_gameState);
@@ -29,13 +26,7 @@ export class GameMenuComponent implements OnInit {
     if (key && this.boardBounds[key] && value) {
       this.boardBounds[key] = parseInt(value, 10);
     }
-    //Keep this outside so the Apply button click will still trigger an event emission
+    // Keep this outside the check so the Apply button click will still trigger an event emission
     this.updateBoardBounds.emit(this.boardBounds);
-    console.log('[GameMenu] this.boardBoards', this.boardBounds);
   }
-
-  // The boardBounds inputs still need some work
-  // need to bind an event and then pull values from a template reference variable
-  // which is a different method than using e.target.value
-  // https://angular.io/guide/user-input#get-user-input-from-a-template-reference-variable
 }

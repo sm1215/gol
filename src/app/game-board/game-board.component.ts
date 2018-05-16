@@ -63,8 +63,11 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
       break;
       case 'pause':
         this.pauseGame();
+        this.getStats();
       break;
       case 'clear':
+        this.pauseGame();
+        this.getStats();
         this.clearGame();
       break;
     }
@@ -115,8 +118,6 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     this._cellsArray.forEach((cell) => {
       cell.alive = false;
     });
-
-    this.pauseGame();
   }
 
   advanceTick() {
@@ -245,5 +246,29 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
 
   queueAction(action: { y: number, x: number, action: string, reason: string }) {
     this._queue.push(action);
+  }
+
+  getStats() {
+    const history = this._history;
+
+
+
+    // todo: history is a 2D array so this won't work.
+    const deathsLoneliness = history.filter(action => action.action === 'DEATH' && action.reason === 'Loneliness');
+    const vacancies = history.filter(action => action.action === 'VACANT');
+    const stableBalanced = history.filter(action => action.action === 'STABLE' && action.reason === 'Balanced Population');
+    const stableOptimal = history.filter(action => action.action === 'STABLE' && action.reason === 'Optimal Population');
+    const births = history.filter(action => action.action === 'BIRTH');
+    const deathsOvercrowding = history.filter(action => action.action === 'DEATH' && action.reason === 'Overcrowding');
+
+    console.log('history', history);
+    console.log(
+      'Vacancies', vacancies.length,
+      'Deaths from loneliness', deathsLoneliness.length,
+      'Deaths from overcrowding', deathsOvercrowding.length,
+      'Stable from balanced pop', stableBalanced.length,
+      'Stable from optimal pop', stableOptimal.length,
+      'Births', births.length
+    );
   }
 }

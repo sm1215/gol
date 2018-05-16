@@ -25,19 +25,21 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
   private _differ: KeyValueDiffer<string, number>;
   private _gameboard = [];
   private _tick = 0;
-  private _tickInterval = 3000;
+  private _tickInterval = 100;
   private _tickTimer = null;
+  private _queue = [];
+  private _history = [];
 
   @Input()
   set gameState(value: string) {
     this._gameState = value;
-    console.log('[GameBoard set gameState]', this._gameState);
+    // console.log('[GameBoard set gameState]', this._gameState);
   }
 
   @Input()
   set boardBounds(value: {[key: string]: number}) {
     this._boardBounds = value;
-    console.log('[GameBoard set boardBounds]', this._boardBounds);
+    // console.log('[GameBoard set boardBounds]', this._boardBounds);
 
     if (!this._differ && value) {
       this._differ = this._differs.find(value).create();
@@ -63,13 +65,14 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
         this.pauseGame();
       break;
       case 'clear':
+        this.clearGame();
       break;
     }
-    console.log('[GameBoard OnChanges]');
+    // console.log('[GameBoard OnChanges]');
   }
 
   ngDoCheck() {
-    console.log('[GameBoard ngDoCheck] checking boardBounds differ');
+    // console.log('[GameBoard ngDoCheck] checking boardBounds differ');
     if (this._differ) {
       const changes = this._differ.diff(this._boardBounds);
       if (changes) {
@@ -88,39 +91,85 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
       gameboard.push(row);
     }
     this._gameboard = gameboard;
-    console.log('[GameBoard setup Gameboard]', this._gameboard);
+    // console.log('[GameBoard setup Gameboard]', this._gameboard);
   }
 
   startGame() {
-    console.log('[GameBoard] starting game...');
+    // console.log('[GameBoard] starting game...');
     this._tickTimer = setInterval(() => {
       this.advanceTick();
     }, this._tickInterval);
   }
 
   pauseGame() {
-    console.log('[GameBoard] pausing game...');
+    // console.log('[GameBoard] pausing game...');
     window.clearInterval(this._tickTimer);
   }
 
   clearGame() {
     console.log('[GameBoard] clearing and pausing game...');
     this._tick = 0;
+    this._queue = [];
+    this._history = [];
+
+    this._cellsArray.forEach((cell) => {
+      cell.alive = false;
+    });
+
     this.pauseGame();
   }
 
   advanceTick() {
-    this._tick++;
+
+    this.resolveQueue();
+
     const yLength = this._gameboard.length;
 
     for (let y = 0; y < yLength; y++) {
       const xLength = this._gameboard[y].length;
       for (let x = 0; x < xLength; x++) {
-        this.findNeighbors(y, x, yLength - 1, xLength - 1, false);
+        const cell = this.findCell(y, x);
+        const aliveNeighbors = this.findNeighbors(y, x, yLength - 1, xLength - 1, true);
+        const neighborCount = aliveNeighbors.length;
+        let action = '';
+        let reason = '';
+
+        if (neighborCount <= 1 && cell.alive) {
+          action = 'DEATH';
+          reason = 'Loneliness';
+        }
+        if (neighborCount <= 1 && !cell.alive) {
+          action = 'VACANT';
+          reason = 'Low Population';
+        }
+        if (neighborCount === 2) {
+          action = 'STABLE';
+          reason = 'Balanced Population';
+        }
+        if (neighborCount === 3 && cell.alive) {
+          action = 'STABLE';
+          reason = 'Optimal Population';
+        }
+        if (neighborCount === 3 && !cell.alive) {
+          action = 'BIRTH';
+          reason = 'Optimal Population';
+        }
+        if (neighborCount > 4) {
+          action = 'DEATH';
+          reason = 'Overcrowding';
+        }
+        this.queueAction({ y, x, action, reason });
       }
     }
 
+    this._tick++;
     console.log('tick', this._tick);
+  }
+
+  findCell(y: number, x: number) {
+    return this._cellsArray.filter((cell, i, arr) => {
+      return cell.y === y && cell.x === x;
+    })[0];
   }
 
   findNeighbors(y: number, x: number, yMax: number, xMax: number, living: boolean) {
@@ -153,7 +202,7 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
           break;
         }
 
-        if (cell.y === coord.y && cell.x === coord.x) {
+        if (cell.y === coord.y && cell.x === coord.x && ((living && cell.alive) || !living) ) {
           acc.push(cell);
           matchingIndex = j;
           break;
@@ -170,5 +219,31 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     }, []);
 
     return neighbors;
+  }
+
+  resolveQueue() {
+    // console.log('[GameBoard] ResolveQueue', this._queue);
+    if (this._queue.length <= 0) {
+      return;
+    }
+    for (let i = 0; i < this._queue.length; i++) {
+      const action = this._queue[i];
+      const cell = this.findCell(action.y, action.x);
+      switch (action.action) {
+        case 'BIRTH':
+          cell.alive = true;
+        break;
+
+        case 'DEATH':
+          cell.alive = false;
+        break;
+      }
+    }
+    this._history.push(this._queue);
+    this._queue = [];
+  }
+
+  queueAction(action: { y: number, x: number, action: string, reason: string }) {
+    this._queue.push(action);
   }
 }

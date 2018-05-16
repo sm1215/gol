@@ -7,8 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class GameMenuComponent implements OnInit {
   boardBounds = {
-    height: 3,
-    width: 3
+    height: 9,
+    width: 9
   };
 
   @Output() updateBoardBounds: EventEmitter<any> = new EventEmitter();

@@ -116,28 +116,18 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     for (let y = 0; y < yLength; y++) {
       const xLength = this._gameboard[y].length;
       for (let x = 0; x < xLength; x++) {
-        this.findNeighbors(y, x, yLength - 1, xLength - 1);
+        this.findNeighbors(y, x, yLength - 1, xLength - 1, false);
       }
     }
 
     console.log('tick', this._tick);
   }
 
-  // 8 neighbors total, wrap the grid boundaries
-  // coord pairs for each neighbor
-  // y-1, x-1
-  // y-1, x,
-  // y-1, x+1
-  // y, x-1
-  // y, x+1,
-  // y+1, x-1,
-  // y+1, x,
-  // y+1, x+1
-  findNeighbors(y, x, yMax, xMax) {
+  findNeighbors(y: number, x: number, yMax: number, xMax: number, living: boolean) {
     // Boundary wrapping
-    const yMinus = (y - 1) > 0 ? y - 1 : yMax;
+    const yMinus = (y - 1) >= 0 ? y - 1 : yMax;
     const yPlus = (y + 1) <= yMax ? y + 1 : 0;
-    const xMinus = (x - 1) > 0 ? x - 1 : xMax;
+    const xMinus = (x - 1) >= 0 ? x - 1 : xMax;
     const xPlus = (x + 1) <= xMax ? x + 1 : 0;
 
     // All the neighbors that need to be found
@@ -153,11 +143,29 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     ];
 
     const neighbors = this._cellsArray.reduce((acc, cell, i, arr) => {
-      neighborCoords.forEach((coord) => {
-        if (cell.x === coord.x && cell.y === coord.y) {
-          acc.push(coord);
+      let matchingIndex = -1;
+
+      for (let j = 0; j < neighborCoords.length; j++) {
+        const coord = neighborCoords[j];
+
+        // break if checking cell against itself
+        if (y === cell.y && x === cell.x) {
+          break;
         }
-      });
+
+        if (cell.y === coord.y && cell.x === coord.x) {
+          acc.push(cell);
+          matchingIndex = j;
+          break;
+        }
+
+      }
+
+      // Shorten the search since we've found a neighbor
+      if (matchingIndex > 0) {
+        neighborCoords.splice(matchingIndex, 1);
+      }
+
       return acc;
     }, []);
 

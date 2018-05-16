@@ -134,25 +134,13 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
   // y+1, x,
   // y+1, x+1
   findNeighbors(y, x, yMax, xMax) {
-    let neighbors = [];
-
     // Boundary wrapping
     const yMinus = (y - 1) > 0 ? y - 1 : yMax;
     const yPlus = (y + 1) <= yMax ? y + 1 : 0;
     const xMinus = (x - 1) > 0 ? x - 1 : xMax;
     const xPlus = (x + 1) <= xMax ? x + 1 : 0;
 
-    console.log('y', y);
-    console.log('yMinus', yMinus);
-    console.log('yPlus', yPlus);
-    console.log('yMax', yMax);
-    console.log('-----------------------------');
-    console.log('x', x);
-    console.log('xMinus', xMinus);
-    console.log('xPlus', xPlus);
-    console.log('xMax', xMax);
-
-    // All the neighbors that need to be checked
+    // All the neighbors that need to be found
     const neighborCoords = [
       { y: yMinus, x: xMinus },
       { y: yMinus, x: x },
@@ -164,25 +152,15 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
       { y: yPlus, x: xPlus }
     ];
 
-    neighbors = this._cellsArray.filter((cell) => {
-      let coordMatch;
-
-      // instead of forEach, should use array.every?
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
-      // https://stackoverflow.com/a/44998197/4430625
+    const neighbors = this._cellsArray.reduce((acc, cell, i, arr) => {
       neighborCoords.forEach((coord) => {
-        const matches = cell.x === coord.x && cell.y === coord.y;
-        if (matches) {
-          coordMatch = coord;
+        if (cell.x === coord.x && cell.y === coord.y) {
+          acc.push(coord);
         }
       });
-      if (coordMatch) {
-        return coordMatch;
-      }
-    });
+      return acc;
+    }, []);
 
-    console.log('neighbors', neighbors);
-
-
+    return neighbors;
   }
 }

@@ -8,7 +8,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class CellComponent implements OnInit, OnChanges {
   @Input() x: number;
   @Input() y: number;
-  @Input() alive: boolean;
+  @Input() alive = false;
   @Input() aliveSince: number;
 
   constructor() {}

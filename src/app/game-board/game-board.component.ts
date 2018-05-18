@@ -11,10 +11,13 @@ import {
   QueryList
 } from '@angular/core';
 
+import { DatastoreService } from '../datastore.service';
+
 @Component({
   selector: 'app-game-board',
   templateUrl: './game-board.component.html',
-  styleUrls: ['./game-board.component.css']
+  styleUrls: ['./game-board.component.css'],
+  providers: [ DatastoreService ]
 })
 export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoCheck {
   private _gameState: string;
@@ -49,7 +52,8 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
   @ViewChildren('cell') cells: QueryList<any>;
   private _cellsArray = [];
 
-  constructor(private _differs: KeyValueDiffers) {}
+  constructor(private _differs: KeyValueDiffers, private datastore: DatastoreService) {}
+
   ngOnInit() {}
 
   ngAfterViewInit() {
@@ -60,10 +64,13 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     switch (this._gameState) {
       case 'start':
         this.startGame();
+
+        console.log('Old game data', this.datastore.loadGame());
       break;
       case 'pause':
         this.pauseGame();
         this.getStats();
+        this.saveGame();
       break;
       case 'clear':
         this.pauseGame();
@@ -118,6 +125,10 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
     this._cellsArray.forEach((cell) => {
       cell.alive = false;
     });
+  }
+
+  saveGame() {
+    this.datastore.saveGame(this._history);
   }
 
   advanceTick() {

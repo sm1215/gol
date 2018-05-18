@@ -4,7 +4,6 @@ const STORAGE_KEY = 'GoL';
 
 @Injectable()
 
-
 // TODO: Build some tests for this service
 export class DatastoreService {
 

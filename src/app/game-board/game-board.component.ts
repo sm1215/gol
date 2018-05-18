@@ -146,6 +146,9 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
         let action = '';
         let reason = '';
 
+        // http://web.stanford.edu/~cdebs/GameOfLife/
+        // The rules I've implemented don't seem to match this description.
+        // Maybe something is off?
         if (neighborCount <= 1 && cell.alive) {
           action = 'DEATH';
           reason = 'Loneliness';

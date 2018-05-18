@@ -41,13 +41,7 @@ export class DatastoreService {
   retrieveGol() {
     if (window.localStorage) {
       const stringified = localStorage.getItem(STORAGE_KEY);
-      let data;
-      if (!stringified) {
-        data = [];
-      } else {
-        data = JSON.parse(stringified);
-      }
-      return data;
+      return stringified ? JSON.parse(stringified) : [];
     } else {
       return false;
     }

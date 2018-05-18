@@ -169,7 +169,7 @@ export class GameBoardComponent implements OnInit, AfterViewInit, OnChanges, DoC
           action = 'BIRTH';
           reason = 'Optimal Population';
         }
-        if (neighborCount > 4) {
+        if (neighborCount > 3) {
           action = 'DEATH';
           reason = 'Overcrowding';
         }
